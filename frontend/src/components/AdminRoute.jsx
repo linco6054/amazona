@@ -1,0 +1,22 @@
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+function AdminRoute({ component: Component, ...rest }) {
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        userInfo && userInfo.isAdmin ? (
+          <Component {...props}></Component>
+        ) : (
+          <Redirect to="/" />
+        )
+      }
+    ></Route>
+  );
+}
+
+export default AdminRoute;
